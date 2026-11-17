@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phishing URL Detector</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Is this link a trap?</h1>
+      <p class="lead">Paste a URL. A machine-learning model reads its structure and tells you if it looks like phishing. The link is never opened.</p>
+    </header>
+
+    <form id="form" autocomplete="off">
+      <label for="url">URL to check</label>
+      <div class="field">
+        <input id="url" name="url" type="text" spellcheck="false" placeholder="https://example.com/login" required>
+        <button type="submit" id="go">Analyze URL</button>
+      </div>
+      <div class="examples" aria-label="Example URLs">
+        <span>Try one:</span>
+        {% for e in examples %}
+        <button type="button" class="chip" data-url="{{ e }}">{{ e|replace('https://','')|replace('http://','')|truncate(34, True, '…') }}</button>
+        {% endfor %}
+      </div>
+    </form>
+
+    <p id="error" class="error" role="alert" hidden></p>
+
+    <section id="result" hidden aria-live="polite">
+      <div class="verdict" id="verdict">
+        <h2 id="verdict-title"></h2>
+        <p id="verdict-sub"></p>
+      </div>
+
+      <div class="meter" aria-hidden="true"><div id="meter-fill"></div></div>
+      <p class="meter-label"><span>Legitimate</span><span id="meter-value"></span><span>Phishing</span></p>
+
+      <h3>How the model sees this URL</h3>
+      <p class="hint">Underlined parts triggered a warning.</p>
+      <p id="anatomy" class="anatomy"></p>
+
+      <h3>Warnings</h3>
+      <ul id="flags" class="flags"></ul>
+    </section>
+
+    <section id="history-wrap" hidden>
+      <h3>Checked in this session</h3>
+      <ul id="history" class="history"></ul>
+    </section>
+
+    <footer>
+      <p>Model: {{ model.model_name }} · F1 {{ model.metrics.f1 }} · trained on {{ model.data_source }}.</p>
+      <p>A score is an estimate, not a guarantee. When in doubt, do not enter a password: open the site by typing its address yourself.</p>
+    </footer>
+  </main>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
