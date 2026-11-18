@@ -1,4 +1,4 @@
-# 🛡️ AI-Based Phishing URL Detection System
+# AI-Based Phishing URL Detection System
 
 > A machine-learning application that analyses a URL and decides whether it is **phishing** or **legitimate**, explains *why*, and runs entirely on your laptop for **$0**.
 
@@ -160,4 +160,4 @@ Models and datasets are git-ignored on purpose (they are regenerated in seconds)
 
 ## 12. License
 
-MIT: see [LICENSE](LICENSE). Replace `<YOUR NAME>` in the license file.
+MIT: see [LICENSE](LICENSE).
